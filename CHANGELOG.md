@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.1 — 2026-10-07
+
+- Generate INDEX.md with English Description, Include, and Exclude sections and guidance.
+- Continue reading existing Korean sections without rewriting user files.
+- Prefer nonempty English sections when both languages are present.
+
+Validation: TypeScript checks, 264 unit tests, and production build.
+
 ## 0.3.0 — 2026-10-07
 
 - Display analysis results by confidence, highest first.

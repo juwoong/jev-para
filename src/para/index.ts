@@ -76,9 +76,9 @@ function extractSection(markdown: string, sectionTitle: string): string {
 
 export function parseIndex(markdown: string): IndexFields {
   const { para, title, rest } = parseFrontmatter(markdown);
-  const description = extractSection(rest, '설명');
-  const include = extractSection(rest, '포함할 내용');
-  const exclude = extractSection(rest, '제외할 내용');
+  const description = extractSection(rest, 'Description') || extractSection(rest, '설명');
+  const include = extractSection(rest, 'Include') || extractSection(rest, '포함할 내용');
+  const exclude = extractSection(rest, 'Exclude') || extractSection(rest, '제외할 내용');
   return { para, title, description, include, exclude };
 }
 
@@ -118,14 +118,14 @@ para: ${category}
 
 # ${mdName}
 
-## 설명
-<!-- 이 폴더에 모을 내용과 목적을 적어주세요. -->
+## Description
+<!-- Describe the purpose of this folder and what belongs here. -->
 
-## 포함할 내용
-<!-- 여기에 속하는 자료의 특징이나 예시를 적어주세요. -->
+## Include
+<!-- List characteristics or examples of notes to include. -->
 
-## 제외할 내용
-<!-- 다른 폴더로 보내야 하는 자료를 적어주세요. -->
+## Exclude
+<!-- Describe notes that belong in other folders. -->
 `;
 }
 

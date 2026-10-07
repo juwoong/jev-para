@@ -1,10 +1,10 @@
-# Jev PARA v0.3.0
+# Jev PARA v0.3.1
 
 Inbox에 넣어 둔 노트를, 각 분류 폴더의 `INDEX.md`에 적은 기준과 Jev 판단으로 PARA 위치에 정리하는 Obsidian 데스크톱 플러그인입니다. 여기서 sync는 외부 동기화가 아니라 로컬 Inbox 정리 실행을 뜻합니다.
 
 ## 설치
 
-[v0.3.0 릴리스](https://github.com/juwoong/jev-para/releases/tag/v0.3.0)에서 `main.js`, `manifest.json`, `styles.css`를 내려받아 vault의 `.obsidian/plugins/jev-para/`에 넣고 활성화합니다. 화면은 영어이며 기존 한국어 INDEX 형식은 그대로 지원합니다.
+[v0.3.1 릴리스](https://github.com/juwoong/jev-para/releases/tag/v0.3.1)에서 `main.js`, `manifest.json`, `styles.css`를 내려받아 vault의 `.obsidian/plugins/jev-para/`에 넣고 활성화합니다. 화면은 영어이며 기존 한국어 INDEX 형식은 그대로 지원합니다.
 
 ### 소스에서 빌드
 
@@ -30,7 +30,7 @@ JEV_API_KEY=발급받은키
 
 ## 분류 기준 작성
 
-`1. Projects`, `2. Areas`, `3. Resources`, `4. Archives` 바로 아래에 폴더를 만들면 `INDEX.md`가 자동 생성됩니다. 각 파일의 `## 설명`에 이 폴더에 모을 내용을 적어야 분류 후보가 됩니다. `## 포함할 내용`과 `## 제외할 내용`은 선택 사항이지만 적으면 판단이 정확해집니다. 설명이 없는 폴더는 분류 대상에서 빠집니다.
+`1. Projects`, `2. Areas`, `3. Resources`, `4. Archives` 바로 아래에 폴더를 만들면 `INDEX.md`가 자동 생성됩니다. 기존 한국어 제목도 계속 지원하며, 영어·한국어 섹션이 함께 있으면 내용이 있는 영어 섹션을 우선합니다. 각 파일의 `## Description`에 이 폴더에 모을 내용을 적어야 분류 후보가 됩니다. `## Include`과 `## Exclude`은 선택 사항이지만 적으면 판단이 정확해집니다. 설명이 없는 폴더는 분류 대상에서 빠집니다.
 
 ```markdown
 ---
@@ -39,14 +39,14 @@ para: projects
 
 # 서비스 출시
 
-## 설명
+## Description
 새 서비스의 베타 출시를 준비하는 프로젝트.
 
-## 포함할 내용
+## Include
 - 출시 일정과 체크리스트
 - 베타 사용자 피드백
 
-## 제외할 내용
+## Exclude
 - 평소 사업 운영 기록 → Areas/사업 운영
 ```
 

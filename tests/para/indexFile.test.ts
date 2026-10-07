@@ -124,11 +124,11 @@ describe('buildIndexTemplate - IDX-01, IDX-07', () => {
     expect(h1Matches![0]).toBe('# 건강');
   });
 
-  it('contains the three Korean section headings', () => {
+  it('contains the three English section headings', () => {
     const tmpl = buildIndexTemplate('resources', 'AI 에이전트');
-    expect(tmpl).toContain('## 설명');
-    expect(tmpl).toContain('## 포함할 내용');
-    expect(tmpl).toContain('## 제외할 내용');
+    expect(tmpl).toContain('## Description');
+    expect(tmpl).toContain('## Include');
+    expect(tmpl).toContain('## Exclude');
   });
 
   it('does not inject extra frontmatter keys for folder name with colon', () => {
@@ -321,3 +321,26 @@ describe('ensureIndexesForVault - IDX-08, IDX-09, IDX-10', () => {
   });
 });
 
+
+
+describe('English INDEX compatibility', () => {
+  it('reads populated English sections', () => {
+    const fields = parseIndex('## Description\nLaunch plans\n## Include\nMilestones\n## Exclude\nDaily operations');
+    expect(fields.description).toBe('Launch plans');
+    expect(fields.include).toBe('Milestones');
+    expect(fields.exclude).toBe('Daily operations');
+  });
+
+  it('keeps the English template inactive until a description is written', () => {
+    const template = buildIndexTemplate('projects', 'Launch');
+    expect(template).not.toMatch(/[가-힣]/);
+    expect(isDescriptionActive(parseIndex(template))).toBe(false);
+  });
+
+  it('falls back to Korean sections when English sections only contain comments', () => {
+    const fields = parseIndex('## Description\n<!-- Add details -->\n## 설명\n기존 설명\n## Include\nEnglish example\n## 제외할 내용\n기존 제외');
+    expect(fields.description).toBe('기존 설명');
+    expect(fields.include).toBe('English example');
+    expect(fields.exclude).toBe('기존 제외');
+  });
+});
