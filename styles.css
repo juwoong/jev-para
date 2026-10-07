@@ -1,0 +1,49 @@
+.jev-para-view {
+  padding: 12px 16px;
+}
+
+.jev-para-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.jev-para-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.jev-para-row {
+  border-bottom: 1px solid var(--background-modifier-border);
+  padding: 8px 0;
+}
+
+.jev-para-row-title {
+  font-weight: 600;
+}
+
+.jev-para-meta {
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+}
+
+.jev-para-state-auto {
+  color: var(--text-success);
+}
+
+.jev-para-state-review {
+  color: var(--text-warning);
+}
+
+.jev-para-state-error {
+  color: var(--text-error);
+}
+
+.jev-para-detail {
+  margin-top: 6px;
+  font-size: var(--font-ui-smaller);
+}
