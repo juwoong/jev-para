@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.0 — 2026-10-07
+
+- Display analysis results by confidence, highest first.
+- Preserve the order of ties and place results without confidence last.
+- Keep processing order and row selection unchanged.
+
+Validation: TypeScript checks, 261 unit tests, and production build.
+
 ## 0.2.0 — 2026-10-07
 
 - Publish Jev PARA as an independent Obsidian desktop plugin repository.

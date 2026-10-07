@@ -2,6 +2,8 @@ import { ItemView, Notice, WorkspaceLeaf, setIcon } from 'obsidian';
 import type { Orchestrator, OrchestratorSnapshot } from '../orchestrator';
 import { REFUSAL_ID, type AnalysisResult, type Candidate } from '../ports';
 
+import { sortByConfidence } from './resultOrder';
+
 export const VIEW_TYPE_JEV_PARA = 'jev-para-view';
 
 const STATE_LABEL: Record<AnalysisResult['state'], string> = {
@@ -122,7 +124,8 @@ export class JevParaView extends ItemView {
       return;
     }
 
-    for (const result of snapshot.results) this.renderRow(container, result, snapshot.candidates);
+    container.createDiv({ cls: 'jev-para-meta', text: 'Sorted by confidence: highest first' });
+    for (const result of sortByConfidence(snapshot.results)) this.renderRow(container, result, snapshot.candidates);
   }
 
   private renderRow(container: HTMLElement, result: AnalysisResult, candidates: Candidate[]): void {

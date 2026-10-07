@@ -1,10 +1,10 @@
-# Jev PARA v0.2.0
+# Jev PARA v0.3.0
 
 Inbox에 넣어 둔 노트를, 각 분류 폴더의 `INDEX.md`에 적은 기준과 Jev 판단으로 PARA 위치에 정리하는 Obsidian 데스크톱 플러그인입니다. 여기서 sync는 외부 동기화가 아니라 로컬 Inbox 정리 실행을 뜻합니다.
 
 ## 설치
 
-[v0.2.0 릴리스](https://github.com/juwoong/jev-para/releases/tag/v0.2.0)에서 `main.js`, `manifest.json`, `styles.css`를 내려받아 vault의 `.obsidian/plugins/jev-para/`에 넣고 활성화합니다. 화면은 영어이며 기존 한국어 INDEX 형식은 그대로 지원합니다.
+[v0.3.0 릴리스](https://github.com/juwoong/jev-para/releases/tag/v0.3.0)에서 `main.js`, `manifest.json`, `styles.css`를 내려받아 vault의 `.obsidian/plugins/jev-para/`에 넣고 활성화합니다. 화면은 영어이며 기존 한국어 INDEX 형식은 그대로 지원합니다.
 
 ### 소스에서 빌드
 
@@ -53,6 +53,8 @@ para: projects
 분류 폴더는 PARA 루트 바로 아래 한 단계만 사용합니다. 이름이 `_` 또는 `.`로 시작하는 폴더는 자동 생성과 분류에서 제외합니다. `Archives`는 INDEX만 만들고 자동 분류하지 않습니다.
 
 ## 수동 정리
+
+분석 결과는 confidence 내림차순으로 표시합니다. 동점은 기존 순서를 유지하고, confidence가 없는 항목은 맨 아래에 표시합니다.
 
 처음에는 수동 미리보기 모드입니다. 리본의 반짝임 아이콘이나 명령 팔레트의 `Open Jev PARA organizer`로 뷰를 열고 `Analyze`을 누르면, 각 노트의 목적지와 confidence, 선택 확률, 상위 후보가 표시됩니다. 실제 이동은 행을 선택한 뒤 `Move selected`을 눌러야 일어납니다. 목적지는 행의 선택 상자에서 직접 바꿀 수 있습니다.
 
