@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.4.0 — 2026-10-07
+## 0.3.2 — 2026-10-07
 
 - Group results by Ready to move, Needs review, Errors, then Skipped.
 - Sort each group by descending confidence as results arrive.
