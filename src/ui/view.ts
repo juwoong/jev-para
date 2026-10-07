@@ -2,7 +2,7 @@ import { ItemView, Notice, WorkspaceLeaf, setIcon } from 'obsidian';
 import type { Orchestrator, OrchestratorSnapshot } from '../orchestrator';
 import { REFUSAL_ID, type AnalysisResult, type Candidate } from '../ports';
 
-import { sortByConfidence } from './resultOrder';
+import { sortResults } from './resultOrder';
 
 export const VIEW_TYPE_JEV_PARA = 'jev-para-view';
 
@@ -79,6 +79,11 @@ export class JevParaView extends ItemView {
       const outcome = await this.orchestrator.analyzeAll();
       new Notice(`Analysis complete: ${outcome.analyzed} analyzed, ${outcome.failed} failed`);
     });
+    const moveReady = this.action(actions, `Move all ready (${counts.auto})`, 'folder-input', async () => {
+      const outcome = await this.orchestrator.moveAllReady();
+      new Notice(`Moved ${outcome.moved}, failed ${outcome.failed}`);
+    });
+    moveReady.disabled = snapshot.running || counts.auto === 0;
     this.action(actions, 'Move selected', 'folder-input', async () => {
       const targets = [...this.selected].filter((path) => snapshot.results.some((result) => result.notePath === path));
       if (targets.length === 0) {
@@ -124,8 +129,8 @@ export class JevParaView extends ItemView {
       return;
     }
 
-    container.createDiv({ cls: 'jev-para-meta', text: 'Sorted by confidence: highest first' });
-    for (const result of sortByConfidence(snapshot.results)) this.renderRow(container, result, snapshot.candidates);
+    container.createDiv({ cls: 'jev-para-meta', text: 'Ready to move → Needs review → Errors → Skipped · Highest confidence first' });
+    for (const result of sortResults(snapshot.results)) this.renderRow(container, result, snapshot.candidates);
   }
 
   private renderRow(container: HTMLElement, result: AnalysisResult, candidates: Candidate[]): void {
@@ -183,12 +188,13 @@ export class JevParaView extends ItemView {
     };
   }
 
-  private action(container: HTMLElement, label: string, icon: string, handler: () => void | Promise<void>): void {
+  private action(container: HTMLElement, label: string, icon: string, handler: () => void | Promise<void>): HTMLButtonElement {
     const button = container.createEl('button');
     const iconEl = button.createSpan();
     setIcon(iconEl, icon);
     button.createSpan({ text: label });
     button.onclick = () => void handler();
+    return button;
   }
 }
 

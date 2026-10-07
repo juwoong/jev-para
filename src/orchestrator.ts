@@ -277,6 +277,12 @@ export class Orchestrator {
     return this.analyzeAll({ bypassCache: true });
   }
 
+  async moveAllReady(): Promise<MoveSummary> {
+    return this.applyMoves([...this.results.values()]
+      .filter((result) => result.state === 'auto' && result.folderPath !== null)
+      .map((result) => result.notePath));
+  }
+
   async applyMoves(notePaths: string[]): Promise<MoveSummary> {
     const plans: MovePlan[] = [];
     for (const notePath of notePaths) {

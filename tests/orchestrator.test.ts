@@ -352,3 +352,23 @@ describe('orchestrator lifecycle', () => {
     expect(h.vault.log.filter((entry) => entry.startsWith('rename:'))).toHaveLength(0);
   });
 });
+
+it('moves all ready rows together while leaving review and error rows in Inbox', async () => {
+  const h = await harness({ mode: 'manual' });
+  const ready = '0. Inbox/second.md';
+  const review = '0. Inbox/review.md';
+  const error = '0. Inbox/error.md';
+  for (const path of [ready, review, error]) await h.vault.write(path, path);
+  h.http.enqueue(answer(h, PROJECT));
+  h.http.enqueue(answer(h, PROJECT));
+  h.http.enqueue(answer(h, PROJECT, 0.3));
+  h.http.enqueue(jsonResponse(400, {}));
+  await h.orchestrator.analyzeNotes([NOTE, ready, review, error]);
+  const outcome = await h.orchestrator.moveAllReady();
+  expect(outcome.moved).toBe(2);
+  expect(h.vault.files.has(NOTE)).toBe(false);
+  expect(h.vault.files.has(ready)).toBe(false);
+  expect(h.vault.files.has(review)).toBe(true);
+  expect(h.vault.files.has(error)).toBe(true);
+  expect((await h.orchestrator.moveAllReady()).moved).toBe(0);
+});

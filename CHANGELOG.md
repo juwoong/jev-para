@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.0 — 2026-10-07
+
+- Group results by Ready to move, Needs review, Errors, then Skipped.
+- Sort each group by descending confidence as results arrive.
+- Add Move all ready with a count, using existing move checks and undo.
+
+Validation: TypeScript checks, 266 tests, and production build.
+
 ## 0.3.1 — 2026-10-07
 
 - Generate INDEX.md with English Description, Include, and Exclude sections and guidance.
