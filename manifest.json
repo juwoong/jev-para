@@ -1,9 +1,9 @@
 {
   "id": "jev-para",
   "name": "Jev PARA",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "minAppVersion": "1.7.2",
-  "description": "Organize Inbox notes into PARA folders using Jev and each folder’s INDEX.md criteria.",
+  "description": "Organize Inbox notes into PARA folders using Jev and criteria from each folder.",
   "author": "juwoong",
   "isDesktopOnly": true
 }

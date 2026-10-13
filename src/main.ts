@@ -50,7 +50,7 @@ export default class JevParaPlugin extends Plugin {
     this.registerView(VIEW_TYPE_JEV_PARA, (leaf: WorkspaceLeaf) => new JevParaView(leaf, this.orchestrator));
     this.addRibbonIcon('sparkles', 'Jev PARA organizer', () => void this.activateView());
     this.addCommand({
-      id: 'open-jev-para',
+      id: 'open-organizer',
       name: 'Open Jev PARA organizer',
       callback: () => void this.activateView(),
     });

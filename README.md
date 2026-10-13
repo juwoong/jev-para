@@ -1,10 +1,10 @@
-# Jev PARA v0.3.3
+# Jev PARA 0.3.4
 
 An Obsidian desktop plugin that organizes Inbox notes into PARA folders using Jev and the criteria in each folder's `INDEX.md`. Here, syncing means organizing the local Inbox, not synchronizing with external storage.
 
 ## Installation
 
-Download `main.js`, `manifest.json`, and `styles.css` from the [v0.3.3 release](https://github.com/juwoong/jev-para/releases/tag/v0.3.3). Place them in your vault's `.obsidian/plugins/jev-para/` directory, then enable **Jev PARA** under **Settings → Community plugins**.
+Download `main.js`, `manifest.json`, and `styles.css` from the [0.3.4 release](https://github.com/juwoong/jev-para/releases/tag/0.3.4). Place them in your vault's `.obsidian/plugins/jev-para/` directory, then enable **Jev PARA** under **Settings → Community plugins**.
 
 The interface and new INDEX templates use English. Existing Korean INDEX sections remain supported. After updating the files, disable and re-enable the plugin or reload Obsidian.
 
@@ -22,11 +22,13 @@ The interface and new INDEX templates use English. Existing Korean INDEX section
 
 ## API token
 
+Classification requires a Jev/TypeSafe account and an API token with access to its hosted API. The plugin is free under the MIT license; API usage is subject to the provider's pricing and account limits. Classification and connection tests require an internet connection and may incur API charges.
+
 Under **Settings → Jev PARA → API key source**, choose one of the following options. **Enter in settings** is the default.
 
 **Enter in settings** — Paste your token into **API token** and click **Save**. Saved tokens are not displayed again. The plugin uses Obsidian secret storage (`app.secretStorage`) when available. On older versions, it stores the token in the plugin's `data.json` and explains this in settings. Click **Delete** to remove the saved token.
 
-**Read from .env** — Read `JEV_API_KEY` from a local `.env` file. The default path is `_dev/jev-para/.env`, relative to the vault. Explicit absolute paths are also supported; relative paths must stay inside the vault.
+**Read from .env** — Read `JEV_API_KEY` from a local `.env` file. The default path is `_dev/jev-para/.env`, relative to the vault. Explicit absolute paths are also supported; relative paths must stay inside the vault. An absolute path can read a token file outside the vault, allowing you to reuse a centrally managed credential file. This access only occurs when you select the .env source and configure that path.
 
 ```dotenv
 JEV_API_KEY=your_api_token
@@ -116,4 +118,8 @@ The implementation contract is in [IMPLEMENTATION_PROMPT.md](IMPLEMENTATION_PROM
 
 ## Privacy
 
-Analysis sends note titles, note content, and folder criteria to the configured Jev API endpoint. Tokens and note bodies are not written to plugin logs.
+Analysis sends note titles, note content, and folder criteria to the configured Jev API endpoint (by default, TypeSafe at `https://api.typesafe.ai/v1/systemone`) to choose a destination. The plugin includes no client-side telemetry. Tokens and note bodies are not written to plugin logs.
+
+## License
+
+[MIT](LICENSE) © 2026 juwoong.

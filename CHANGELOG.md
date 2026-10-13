@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.4 — 2026-10-13
+
+- Add the MIT license and account, network, and external-file disclosures for public distribution.
+- Use a release tag matching the manifest version exactly.
+- Rename the organizer command ID to avoid repeating the plugin ID (reassign custom hotkeys if needed).
+
 ## 0.3.3 — 2026-10-13
 
 - Translate remaining built-in API classification instructions, criteria labels, and connection-test values to English.
