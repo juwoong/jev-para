@@ -28,15 +28,7 @@ Under **Settings → Jev PARA → API key source**, choose one of the following 
 
 **Enter in settings** — Paste your token into **API token** and click **Save**. Saved tokens are not displayed again. The plugin uses Obsidian secret storage (`app.secretStorage`) when available. On older versions, it stores the token in the plugin's `data.json` and explains this in settings. Click **Delete** to remove the saved token.
 
-**Read from .env** — Read `JEV_API_KEY` from a local `.env` file. The default path is `_dev/jev-para/.env`, relative to the vault. Explicit absolute paths are also supported; relative paths must stay inside the vault. An absolute path can read a token file outside the vault, allowing you to reuse a centrally managed credential file. This access only occurs when you select the .env source and configure that path.
-
-```dotenv
-JEV_API_KEY=your_api_token
-```
-
-Saving a token automatically runs a connection test. The result appears in a notice and under **Token status**. Use **Test connection** in settings or the organizer to test again. The test makes one API request with short synthetic input and does not send note content. Both token sources support **Reload token**.
-
-If you use `.env`, exclude it from vault sync or backup tools as appropriate. `.gitignore` only excludes files from Git.
+Saving a token automatically runs a connection test. The result appears in a notice and under **Token status**. Use **Test connection** in settings or the organizer to test again. The test makes one API request with short synthetic input and does not send note content. **Reload token** reloads the saved token.
 
 ## Folder criteria
 

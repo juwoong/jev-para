@@ -7,7 +7,7 @@ import {
   type Candidate,
   type JevParaSettings,
 } from '../src/ports';
-import { FakeClock, FakeFilePort, FakeHttp, FakeStore, FakeVault, deferred, jsonResponse } from './helpers/fakes';
+import { FakeClock, FakeHttp, FakeStore, FakeVault, deferred, jsonResponse } from './helpers/fakes';
 
 const VAULT_ROOT = '/vault';
 const PROJECT = '1. Projects/서비스 출시';
@@ -58,20 +58,15 @@ async function harness(overrides: Partial<JevParaSettings> = {}): Promise<Harnes
   const http = new FakeHttp();
   const clock = new FakeClock();
   const store = new FakeStore();
-  const filePort = new FakeFilePort();
-  const envFile = `${VAULT_ROOT}/_dev/jev-para/.env`;
-  filePort.files.set(envFile, 'JEV_API_KEY=test-key\n');
-  const settings: JevParaSettings = { ...DEFAULT_SETTINGS, keySource: 'env', ...overrides };
-  const keyStore = new FakeKeyStore(false);
+  const settings: JevParaSettings = { ...DEFAULT_SETTINGS, ...overrides };
+  const keyStore = new FakeKeyStore(false, 'test-key');
 
   const orchestrator = new Orchestrator({
     vault,
-    filePort,
     http,
     store,
     clock,
     keyStore,
-    vaultRoot: VAULT_ROOT,
     getSettings: () => settings,
     sleep: async () => undefined,
     logDebug: () => undefined,
@@ -267,7 +262,7 @@ describe('orchestrator moves', () => {
 });
 
 describe('settings-based API key', () => {
-  it('KEY-08 uses a key typed in settings without reading .env', async () => {
+  it('uses a key typed in settings without reading an external file', async () => {
     const h = await harness({ keySource: 'settings' });
     const saved = await h.orchestrator.saveApiKey('typed-key-from-settings');
     expect(saved.ok).toBe(true);
@@ -281,6 +276,7 @@ describe('settings-based API key', () => {
 
   it('KEY-09 reports a missing settings key and schedules no work', async () => {
     const h = await harness({ keySource: 'settings', mode: 'auto' });
+    await h.keyStore.clear();
     await h.orchestrator.reloadKey();
 
     expect(h.snapshot().key.ok).toBe(false);
@@ -292,6 +288,8 @@ describe('settings-based API key', () => {
 
   it('KEY-10 clears the stored key and stops using it', async () => {
     const h = await harness({ keySource: 'settings' });
+    await h.keyStore.clear();
+    await h.orchestrator.reloadKey();
     await h.orchestrator.saveApiKey('typed-key');
     expect(h.snapshot().key.ok).toBe(true);
 
@@ -308,6 +306,8 @@ describe('settings-based API key', () => {
 
   it('KEY-12 records a connection test result for the settings UI', async () => {
     const h = await harness({ keySource: 'settings' });
+    await h.keyStore.clear();
+    await h.orchestrator.reloadKey();
     expect(h.snapshot().keyTest).toBeNull();
 
     const withoutKey = await h.orchestrator.testConnection();

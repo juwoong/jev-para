@@ -35,7 +35,7 @@ export interface VaultPort {
 
 export interface FilePort {
   readTextFile(absPath: string): Promise<string>;
-  /** Resolves symlinks; used to keep .env reads inside the vault. */
+  /** Provides controlled access for adapters that need a text file. */
   realPath(absPath: string): Promise<string>;
 }
 
@@ -157,8 +157,7 @@ export interface AnalysisResult {
 }
 
 export interface JevParaSettings {
-  keySource: 'settings' | 'env';
-  envPath: string;
+  keySource: 'settings';
   baseUrl: string;
   model: string;
   mode: 'manual' | 'auto';
@@ -170,7 +169,6 @@ export interface JevParaSettings {
 
 export const DEFAULT_SETTINGS: JevParaSettings = {
   keySource: 'settings',
-  envPath: '_dev/jev-para/.env',
   baseUrl: 'https://api.typesafe.ai/v1/systemone',
   model: 'jev-latest',
   mode: 'manual',

@@ -1,7 +1,6 @@
 import { AnalysisCache, computeCacheKey } from './policy/cache';
 import { decideMove, type Thresholds } from './policy/decision';
 import { JevClient } from './jev/client';
-import { loadApiKey } from './jev/env';
 import { Journal } from './fs/journal';
 import { moveMany, type MovePlan } from './fs/mover';
 import { recoverPending, undoRun } from './fs/recovery';
@@ -27,7 +26,6 @@ import {
   type AnalysisResult,
   type Candidate,
   type ClockPort,
-  type FilePort,
   type HttpPort,
   type JevParaSettings,
   type KeyLoadResult,
@@ -39,12 +37,10 @@ import {
 
 export interface OrchestratorDeps {
   vault: VaultPort;
-  filePort: FilePort;
   http: HttpPort;
   store: StorePort;
   clock: ClockPort & TimerPort;
   keyStore: ApiKeyStorePort;
-  vaultRoot: string;
   getSettings: () => JevParaSettings;
   sleep: (ms: number) => Promise<void>;
   isActiveEditor?: (path: string) => boolean;
@@ -156,24 +152,16 @@ export class Orchestrator {
 
   async reloadKey(): Promise<KeyLoadResult> {
     const settings = this.deps.getSettings();
-    if (settings.keySource === 'env') {
-      this.key = await loadApiKey({
-        vaultRoot: this.deps.vaultRoot,
-        envPath: settings.envPath,
-        filePort: this.deps.filePort,
-      });
-    } else {
-      const stored = await this.deps.keyStore.get();
-      this.key = stored === null
-        ? { ok: false, key: null, message: 'Enter an API token in settings or select the .env source.' }
-        : {
-            ok: true,
-            key: stored,
-            message: this.deps.keyStore.secure
-              ? 'Using the token saved in secret storage.'
-              : 'Using the saved token (stored in data.json on this Obsidian version).',
-          };
-    }
+    const stored = await this.deps.keyStore.get();
+    this.key = stored === null
+      ? { ok: false, key: null, message: 'Enter an API token in settings.' }
+      : {
+          ok: true,
+          key: stored,
+          message: this.deps.keyStore.secure
+            ? 'Using the token saved in secret storage.'
+            : 'Using the saved token (stored in data.json on this Obsidian version).',
+        };
     this.client.configure(
       this.key.ok && this.key.key !== null
         ? { baseUrl: settings.baseUrl, model: settings.model, apiKey: this.key.key }

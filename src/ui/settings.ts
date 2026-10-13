@@ -38,34 +38,8 @@ export class JevParaSettingTab extends PluginSettingTab {
         }),
       );
 
-    new Setting(containerEl)
-      .setName('API key source')
-      .setDesc('Enter your token directly in settings, or use an existing .env file.')
-      .addDropdown((dropdown) =>
-        dropdown
-          .addOption('settings', 'Enter in settings')
-          .addOption('env', 'Read from .env')
-          .setValue(this.host.settings.keySource)
-          .onChange(async (value) => {
-            this.host.settings.keySource = value === 'env' ? 'env' : 'settings';
-            await this.host.saveSettings();
-            await this.host.orchestrator.reloadKey();
-            this.display();
-          }),
-      );
-
     let pendingKey = '';
-    if (this.host.settings.keySource === 'env') {
-      new Setting(containerEl)
-        .setName('.env path')
-        .setDesc('Use a path relative to this vault, or an explicit absolute path. Relative paths must stay inside the vault.')
-        .addText((text) =>
-          text.setValue(this.host.settings.envPath).onChange(async (value) => {
-            this.host.settings.envPath = value.trim();
-            await this.host.saveSettings();
-          }),
-        );
-    } else {
+    {
       const keySetting = new Setting(containerEl)
         .setName('API token')
         .setDesc(

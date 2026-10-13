@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.5 — 2026-10-13
+
+- Remove `.env` support and the Node.js filesystem adapter. API tokens are entered in plugin settings only.
+- Remove external file access from the runtime bundle.
+- Keep vault access through the Obsidian API.
+
 ## 0.3.4 — 2026-10-13
 
 - Add the MIT license and account, network, and external-file disclosures for public distribution.

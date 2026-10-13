@@ -1,5 +1,4 @@
 import { App, Plugin, TFolder, WorkspaceLeaf } from 'obsidian';
-import { NodeFilePort } from './adapters/nodeFile';
 import { KeyStore, type SecretStorageLike } from './adapters/keyStore';
 import { ObsidianVault } from './adapters/obsidianVault';
 import { PluginStore } from './adapters/pluginStore';
@@ -8,11 +7,6 @@ import { Orchestrator, type OrchestratorSnapshot } from './orchestrator';
 import { DEFAULT_SETTINGS, type JevParaSettings } from './ports';
 import { JevParaSettingTab } from './ui/settings';
 import { JevParaView, VIEW_TYPE_JEV_PARA } from './ui/view';
-
-function getVaultRoot(app: App): string {
-  const adapter = app.vault.adapter as unknown as { getBasePath?: () => string };
-  return typeof adapter.getBasePath === 'function' ? adapter.getBasePath() : '';
-}
 
 export default class JevParaPlugin extends Plugin {
   paraSettings: JevParaSettings = { ...DEFAULT_SETTINGS };
@@ -30,7 +24,6 @@ export default class JevParaPlugin extends Plugin {
 
     this.orchestrator = new Orchestrator({
       vault: new ObsidianVault(this.app),
-      filePort: new NodeFilePort(),
       http: new RequestUrlHttp(),
       store: pluginStore,
       keyStore: new KeyStore({ secretStorage, store: pluginStore }),
@@ -39,7 +32,6 @@ export default class JevParaPlugin extends Plugin {
         setTimeout: (callback, ms) => window.setTimeout(callback, ms),
         clearTimeout: (handle) => window.clearTimeout(handle),
       },
-      vaultRoot: getVaultRoot(this.app),
       getSettings: () => this.paraSettings,
       sleep: (ms) => new Promise((resolve) => window.setTimeout(resolve, ms)),
       isActiveEditor: (path) => this.app.workspace.getActiveFile()?.path === path,
