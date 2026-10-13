@@ -63,15 +63,15 @@ export function buildClassificationRequest(input: {
 
   for (const c of candidates) {
     let desc = `[${c.category}] ${c.name}: ${c.description}`;
-    if (c.include) desc += ` 포함: ${c.include}.`;
-    if (c.exclude) desc += ` 제외: ${c.exclude}.`;
+    if (c.include) desc += ` Include: ${c.include}.`;
+    if (c.exclude) desc += ` Exclude: ${c.exclude}.`;
     criteria[c.id] = desc;
     validIds.push(c.id);
   }
 
   // Add refusal option
   criteria[REFUSAL_ID] =
-    '어떤 폴더에도 명확히 해당하지 않거나, 노트 내용이 분류하기에 충분하지 않을 때 이 옵션을 선택하세요.';
+    'Choose this option when no folder clearly fits or the note contains insufficient information to classify.';
   validIds.push(REFUSAL_ID);
 
   const payload: ClassificationPayload = {
@@ -81,7 +81,7 @@ export function buildClassificationRequest(input: {
       [QUESTION_ID]: {
         type: 'choice',
         instructions:
-          '노트를 가장 적합한 PARA 폴더로 분류하세요. 직접적인 목표·산출물이면 Projects, 지속적인 책임이면 Areas, 일반 참고 지식이면 Resources를 선택하세요. 폴더의 제외 기준도 반영하세요.',
+          'Classify the note into the most appropriate PARA folder. Choose Projects for concrete goals or deliverables, Areas for ongoing responsibilities, and Resources for general reference knowledge. Respect each folder’s exclusion criteria.',
         criteria,
       },
     },
@@ -111,7 +111,7 @@ export function buildConnectionCheckRequest(input: { model: string }): BuildOutc
       folderPath: '1. Projects/test',
       category: 'projects',
       name: 'test',
-      description: '테스트용',
+      description: 'Connection test',
       include: '',
       exclude: '',
       mismatchWarning: false,
@@ -120,8 +120,8 @@ export function buildConnectionCheckRequest(input: { model: string }): BuildOutc
 
   // Build criteria
   const criteria: Record<string, string> = {
-    test_a: '[projects] test: 테스트용',
-    [REFUSAL_ID]: '해당 없음',
+    test_a: '[projects] test: Connection test',
+    [REFUSAL_ID]: 'None of the above',
   };
   const validIds = ['test_a', REFUSAL_ID];
 

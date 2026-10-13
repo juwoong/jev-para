@@ -1,10 +1,10 @@
-# Jev PARA v0.3.2
+# Jev PARA v0.3.3
 
 Inbox에 넣어 둔 노트를, 각 분류 폴더의 `INDEX.md`에 적은 기준과 Jev 판단으로 PARA 위치에 정리하는 Obsidian 데스크톱 플러그인입니다. 여기서 sync는 외부 동기화가 아니라 로컬 Inbox 정리 실행을 뜻합니다.
 
 ## 설치
 
-[v0.3.2 릴리스](https://github.com/juwoong/jev-para/releases/tag/v0.3.2)에서 `main.js`, `manifest.json`, `styles.css`를 내려받아 vault의 `.obsidian/plugins/jev-para/`에 넣고 활성화합니다. 화면은 영어이며 기존 한국어 INDEX 형식은 그대로 지원합니다.
+[v0.3.3 릴리스](https://github.com/juwoong/jev-para/releases/tag/v0.3.3)에서 `main.js`, `manifest.json`, `styles.css`를 내려받아 vault의 `.obsidian/plugins/jev-para/`에 넣고 활성화합니다. 화면은 영어이며 기존 한국어 INDEX 형식은 그대로 지원합니다.
 
 ### 소스에서 빌드
 

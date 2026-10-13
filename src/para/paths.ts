@@ -21,7 +21,7 @@ export function baseName(path: string): string {
 
 /**
  * Returns true if any component of the path starts with '_' or '.'.
- * A mid-name underscore (e.g. AI_에이전트) is allowed.
+ * A mid-name underscore (e.g. AI_agents) is allowed.
  */
 export function isExcludedFolderPath(path: string): boolean {
   return splitPath(path).some((part) => part.startsWith('_') || part.startsWith('.'));

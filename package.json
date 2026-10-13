@@ -1,6 +1,6 @@
 {
   "name": "jev-para",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "private": true,
   "description": "Jev PARA: Inbox notes sorted into PARA folders with the Jev decision API.",
   "type": "commonjs",
