@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.6 — 2026-10-13
+
+- Fix Obsidian compatibility warnings for browser timers and command naming.
+- Remove unused assertions, variables, imports, and regex escapes.
+- Add the settings definitions hook for Obsidian 1.13+.
+
 ## 0.3.5 — 2026-10-13
 
 - Remove `.env` support and the Node.js filesystem adapter. API tokens are entered in plugin settings only.

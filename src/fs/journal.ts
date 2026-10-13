@@ -41,10 +41,10 @@ export class Journal {
       this.holds = new Map();
       return;
     }
-    if (typeof raw !== 'object' || raw === null || !Array.isArray((raw as StoredJournal).records)) {
+    if (typeof raw !== 'object' || raw === null || !Array.isArray(raw.records)) {
       throw new Error('stored journal is corrupt');
     }
-    const stored = raw as StoredJournal;
+    const stored = raw;
     this.records = stored.records;
     this.holds = new Map(Object.entries(stored.holds ?? {}));
   }

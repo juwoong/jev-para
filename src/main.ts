@@ -1,4 +1,4 @@
-import { App, Plugin, TFolder, WorkspaceLeaf } from 'obsidian';
+import { Plugin, TFolder, WorkspaceLeaf } from 'obsidian';
 import { KeyStore, type SecretStorageLike } from './adapters/keyStore';
 import { ObsidianVault } from './adapters/obsidianVault';
 import { PluginStore } from './adapters/pluginStore';
@@ -43,7 +43,7 @@ export default class JevParaPlugin extends Plugin {
     this.addRibbonIcon('sparkles', 'Jev PARA organizer', () => void this.activateView());
     this.addCommand({
       id: 'open-organizer',
-      name: 'Open Jev PARA organizer',
+      name: 'Open organizer',
       callback: () => void this.activateView(),
     });
     this.addSettingTab(

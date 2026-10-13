@@ -83,7 +83,7 @@ export async function moveNote(deps: MoveDeps, runId: string, plan: MovePlan): P
       toPath,
       preHash: plan.expectedHash,
     });
-  } catch (_err) {
+  } catch {
     return { ok: false, failure: { kind: 'journal', message: 'journal write failed' } };
   }
 

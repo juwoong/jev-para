@@ -27,8 +27,6 @@ export async function recoverPending(deps: RecoveryDeps): Promise<{
     const sourcePresent = fromHash !== null;
     const targetPresent = toHash !== null;
     const sourceHashMatch = fromHash === record.preHash;
-    const targetHashMatch = toHash === record.postHash;
-
     if (sourcePresent && !targetPresent && sourceHashMatch) {
       // Not started - source exists with correct hash, target absent
       notStarted.push(record.id);

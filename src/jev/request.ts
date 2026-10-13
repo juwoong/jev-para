@@ -105,19 +105,6 @@ export function buildConnectionCheckRequest(input: { model: string }): BuildOutc
   const { model } = input;
 
   // Use minimal synthetic candidates for connection check
-  const syntheticCandidates: Candidate[] = [
-    {
-      id: 'test_a',
-      folderPath: '1. Projects/test',
-      category: 'projects',
-      name: 'test',
-      description: 'Connection test',
-      include: '',
-      exclude: '',
-      mismatchWarning: false,
-    },
-  ];
-
   // Build criteria
   const criteria: Record<string, string> = {
     test_a: '[projects] test: Connection test',

@@ -127,7 +127,7 @@ export class JevClient {
         status = response.status;
         headers = response.headers;
         responseText = response.text;
-      } catch (err) {
+      } catch {
         const failure: JevFailure = {
           kind: 'transport',
           message: 'A network error occurred.',

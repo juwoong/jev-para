@@ -21,6 +21,10 @@ export class JevParaSettingTab extends PluginSettingTab {
     void this.render();
   }
 
+  override getSettingDefinitions(): [] {
+    return [];
+  }
+
   private async render(): Promise<void> {
     const { containerEl } = this;
     containerEl.empty();

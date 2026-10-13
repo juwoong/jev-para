@@ -9,7 +9,6 @@ import {
 } from '../ports';
 import { contentHash } from '../hash';
 import {
-  splitPath,
   joinPath,
   parentPath,
   baseName,
@@ -90,21 +89,6 @@ export function isDescriptionActive(fields: IndexFields): boolean {
 // buildIndexTemplate
 // ---------------------------------------------------------------------------
 
-function yamlSafeFolderName(name: string): string {
-  const clean = name.replace(/\r?\n/g, ' ').trim();
-  if (
-    /^[-\s]/.test(clean) ||
-    /[:{}\.\[\]|>&*!,%@`]/.test(clean) ||
-    /^#/.test(clean) ||
-    clean.includes('"') ||
-    clean.includes("'") ||
-    clean === '---' ||
-    /^---/.test(clean)
-  ) {
-    return "'" + clean.replace(/'/g, "''") + "'";
-  }
-  return clean;
-}
 
 function markdownSafeFolderName(name: string): string {
   return name.replace(/\r?\n/g, ' ').trim();
@@ -323,7 +307,6 @@ export async function listInboxScope(
 // Re-export path utilities so orchestrator and other modules can import them
 // from a single './para/index' entry point.
 export {
-  splitPath,
   joinPath,
   parentPath,
   baseName,

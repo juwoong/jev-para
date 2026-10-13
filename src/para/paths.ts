@@ -1,4 +1,3 @@
-import { PARA_ROOTS, INBOX_ROOT, SORTABLE_CATEGORIES, type ParaCategory } from '../ports';
 
 export function splitPath(path: string): string[] {
   return path.split('/').filter((part) => part.length > 0);

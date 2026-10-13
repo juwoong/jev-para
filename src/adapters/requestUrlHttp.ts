@@ -9,9 +9,9 @@ function normalizeHeaders(headers: Record<string, string> | undefined): Record<s
 
 export class RequestUrlHttp implements HttpPort {
   async send(request: HttpRequest): Promise<HttpResponse> {
-    let timer: ReturnType<typeof setTimeout> | null = null;
+    let timer: number | null = null;
     const timeout = new Promise<never>((_, reject) => {
-      timer = setTimeout(() => reject(new Error('Jev request timed out')), request.timeoutMs);
+      timer = window.setTimeout(() => reject(new Error('Jev request timed out')), request.timeoutMs);
     });
     try {
       const response = await Promise.race([
@@ -26,7 +26,7 @@ export class RequestUrlHttp implements HttpPort {
       ]);
       return { status: response.status, headers: normalizeHeaders(response.headers), text: response.text };
     } finally {
-      if (timer !== null) clearTimeout(timer);
+      if (timer !== null) window.clearTimeout(timer);
     }
   }
 }
